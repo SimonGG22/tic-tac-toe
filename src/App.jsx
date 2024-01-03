@@ -2,28 +2,12 @@
 
 import { useState } from 'react'
 import confetti from 'canvas-confetti'
+
+import { Square } from './components/Square'
+import { TURNS, WINNER_COMBOS } from './constants'
 import './App.css'
-
-const TURNS = {
-  X: 'x',
-  O: 'o'
-}
-
-
-const Square = ({children, updateBoard, index}) => {
-
-  const handleClick = () => {
-    updateBoard(index)
-  }
-
-  return (
-    <div onClick={handleClick} className='p-10 bg-slate-700 rounded-lg'>
-      {children}
-    </div>
-  )
-}
-
-
+import { WinnerModal } from './components/WinnerModal'
+import { Turn } from './components/Turn'
 
 function App() {
   const [board, setBoard] = useState(Array(9).fill(null))
@@ -78,28 +62,12 @@ function App() {
     }
   }
 
-  const WINNER_COMBOS = [
-    [0, 1, 2],
-    [3, 4, 5],
-    [6 ,7, 8],
-    [0, 3, 6],
-    [1, 4, 7],
-    [2, 5, 8],
-    [0, 4, 8],
-    [2, 4, 6]
-  ]
-
   return (
     <main>
       <h1>TIC TAC TOE</h1>
-      <section className='flex gap-5 items-center justify-center py-3'>
-        <div className={`w-10 h-10 ${turn === TURNS.X ? 'bg-blue-500' : 'hidden'} flex items-center justify-center`}>
-          {TURNS.X}
-        </div>
-        <div className={`w-10 h-10 ${turn === TURNS.O ? 'bg-red-500' : 'hidden'} flex items-center justify-center`}>
-          {TURNS.O}
-        </div>
-      </section>
+
+      <Turn TURNS={TURNS} turn={turn} />
+      
       <section className='grid grid-cols-3 gap-2'>
         {
           board.map((board, index)=>{
@@ -114,25 +82,7 @@ function App() {
 
       {
         winner != null && (
-          <section className='absolute w-full h-full top-0 left-0 grid place-items-center bg-slate-400'>
-            <div>
-              <h2>
-                {
-                  winner === false
-                  ? 'Empate'
-                  : 'Ganador '
-                }
-              </h2>
-
-              <header>
-                {winner && <Square>{winner}</Square>}
-              </header>
-
-              <footer>
-                <button onClick={resetGame}>Restart</button>
-              </footer>
-            </div>
-          </section>
+          <WinnerModal winner={winner} resetGame={resetGame}/>
         )
       }
     </main>
