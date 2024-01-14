@@ -100,7 +100,7 @@ function App() {
         )
       }
 
-      <section className='grid grid-cols-3 auto-cols-auto gap-6 max-w-80 pt-10'>
+      <section className='grid grid-cols-3 auto-cols-auto gap-4 max-w-80 pt-10'>
         <div className='flex flex-col items-center justify-center w-24 h-16 rounded-lg bg-blue-500 text-sm'>
           X 
           <span className='font-bold text-2xl'>{contadorX}</span>
